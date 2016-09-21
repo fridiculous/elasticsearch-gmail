@@ -21,6 +21,7 @@ DEFAULT_BATCH_SIZE = 500
 DEFAULT_ES_URL = "http://localhost:9200"
 DEFAULT_INDEX_NAME = "gmail"
 
+
 def delete_index():
     try:
         url = "%s/%s?refresh=true" % (tornado.options.options.es_url, tornado.options.options.index_name)
@@ -30,6 +31,7 @@ def delete_index():
         logging.info('Delete index done   %s' % response.body)
     except:
         pass
+
 
 def create_index():
 
@@ -65,6 +67,8 @@ def create_index():
 
 
 total_uploaded = 0
+
+
 def upload_batch(upload_data):
     upload_data_txt = ""
     for item in upload_data:
@@ -132,14 +136,13 @@ def load_from_file():
         delete_index()
     create_index()
 
-
     if tornado.options.options.skip:
         logging.info("Skipping first %d messages from mbox file" % tornado.options.options.skip)
 
     count = 0
     upload_data = list()
     logging.info("Starting import from file %s" % tornado.options.options.infile)
-    mbox = mailbox.UnixMailbox(open(tornado.options.options.infile, 'rb'), email.message_from_file)
+    mbox = mailbox.Mailbox(open(tornado.options.options.infile, 'rb'), email.message_from_file)
 
     emailParser = DelegatingEmailParser([AmazonEmailParser(), SteamEmailParser()])
 
