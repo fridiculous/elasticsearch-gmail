@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 from tornado.httpclient import HTTPClient, HTTPRequest
 from tornado.ioloop import IOLoop
 import tornado.options
