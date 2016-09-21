@@ -142,7 +142,7 @@ def load_from_file():
     count = 0
     upload_data = list()
     logging.info("Starting import from file %s" % tornado.options.options.infile)
-    mbox = mailbox.Mailbox(open(tornado.options.options.infile, 'rb'), email.message_from_file)
+    mbox = mailbox.UnixMailbox(open(tornado.options.options.infile, 'rb'), email.message_from_file)
 
     emailParser = DelegatingEmailParser([AmazonEmailParser(), SteamEmailParser()])
 
